@@ -1,6 +1,6 @@
 
 import { makeExecutableSchema } from 'graphql-tools';
-import { ApolloServer, graphqlExpress, graphiqlExpress } from 'apollo-server-express';
+import { ApolloServer } from 'apollo-server-express';
 import bodyParser from 'body-parser';
 
 import app from './config/express';
@@ -12,8 +12,16 @@ const schema = makeExecutableSchema({ typeDefs, resolvers });
 const server = new ApolloServer({ typeDefs, resolvers });
 server.applyMiddleware({ app });
 
-app.listen({ port: 4000 }, () =>
-  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+app.listen({ port: process.env.PORT }, () =>{
+  console.log('Server running in ' + process.env.NODE_ENV);
+
+  if(process.env.NODE_ENV !== 'production'){
+    console.log(`🚀 Server ready at http://localhost:${process.env.PORT}${server.graphqlPath}`)
+  } else {
+    console.log(`🚀 Server ready at http://localhost`)
+  }
+
+}
 );
 
 export default app;

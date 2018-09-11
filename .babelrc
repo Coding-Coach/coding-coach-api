@@ -1,0 +1,22 @@
+{
+  "plugins": [
+    "transform-object-rest-spread"
+  ],
+  "presets": [
+    [
+      "env",
+      {
+        "production": {
+          "presets": [
+            "minify",
+            "babel-plugin-transform-remove-console"
+          ]
+        },
+        "targets": {
+          "node": "current"
+        },
+        "debug": true
+      }
+    ]
+  ]
+}
