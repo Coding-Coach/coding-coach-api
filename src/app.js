@@ -9,14 +9,18 @@ import resolvers from './resolvers';
 
 const schema = makeExecutableSchema({ typeDefs, resolvers });
 
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({
+  typeDefs, resolvers,
+  introspection: process.env.NODE_ENV !== 'production',
+  playground: process.env.NODE_ENV !== 'production',
+});
 server.applyMiddleware({ app });
 
-app.listen({ port: process.env.PORT }, () =>{
+app.listen({ port: process.env.PORT }, () => {
   console.log('Server running in ' + process.env.NODE_ENV);
 
-  if(process.env.NODE_ENV !== 'production'){
-    console.log(`🚀 Server ready at http://localhost:${process.env.PORT}${server.graphqlPath}`)
+  if (process.env.NODE_ENV !== 'production') {
+    console.log(`🚀 Server ready at http://localhost:${ process.env.PORT }${ server.graphqlPath }`)
   } else {
     console.log(`🚀 Server ready at http://localhost`)
   }
