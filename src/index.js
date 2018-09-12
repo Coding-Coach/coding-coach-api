@@ -2,8 +2,8 @@
 
 require('dotenv').config()
 if(process.env.NODE_ENV !== 'production'){
-  require("@babel/register")({
-    presets: [ 'env' ]
+  require('@babel/register')({
+    presets: [ '@babel/preset-env', ]
   });
 } else {
   process.env.PORT = 80;

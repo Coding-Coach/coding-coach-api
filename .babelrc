@@ -1,9 +1,7 @@
 {
   "passPerPreset": true,
   "presets": [
-    ["@babel/preset-env", {
-      "include": ["@babel/plugin-transform-spread"]
-    }]
+    "@babel/preset-env",
   ],
   "plugins": [
     [
@@ -14,6 +12,7 @@
           ".graphql"
         ]
       }
-    ]
+    ],
+    "@babel/plugin-transform-arrow-functions"
   ]
 }
