@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Mentors Create mentor and mentee and : getMentees 1`] = `
+Array [
+  Object {
+    "name": "Mentee One",
+    "type": "Mentee",
+  },
+]
+`;
+
+exports[`Mentors Create mentor and mentee and : getMentors 1`] = `
+Array [
+  Object {
+    "name": "Mentor One",
+    "type": "Mentor",
+  },
+  Object {
+    "name": "Mentor Two",
+    "type": "Mentor",
+  },
+]
+`;
