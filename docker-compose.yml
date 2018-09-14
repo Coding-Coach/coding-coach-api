@@ -20,8 +20,8 @@ services:
     restart: always
     volumes:
       - mongodb:/data/db
-    #ports:
-      # - 127.0.0.1:27017:27017 # for development
+    ports:
+      - 27017:27017 # for development
 
 volumes:
   mongodb: {}

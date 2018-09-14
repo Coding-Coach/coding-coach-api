@@ -29,6 +29,7 @@
     "lodash": "^4.17.10",
     "lusca": "^1.6.1",
     "merge-graphql-schemas": "^1.5.3",
+    "mongoose": "^5.2.14",
     "morgan": "^1.9.1",
     "path": "^0.12.7"
   },

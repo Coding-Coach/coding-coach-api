@@ -1,0 +1,20 @@
+enum UserType {
+  Mentor
+  Mentee
+  Both
+}
+
+type User {
+  id: ID
+  name: String
+  type: UserType
+}
+
+input CreateUserPayload {
+  name: String
+  type: UserType
+}
+
+type Mutation {
+  createUser(data: CreateUserPayload): User
+}
