@@ -7,21 +7,23 @@ import typeDefs from './schema'
 import resolvers from './resolvers'
 import './db'
 
+const env = process.env.NODE_ENV || 'development'
+const port = process.env.PORT || 3000
 const schema = makeExecutableSchema({ typeDefs, resolvers })
 
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  introspection: process.env.NODE_ENV !== 'production',
-  playground: process.env.NODE_ENV !== 'production'
+  introspection: env !== 'production',
+  playground: env !== 'production'
 })
 server.applyMiddleware({ app })
 
 app.listen({ port: process.env.PORT }, () => {
-  console.log('Server running in ' + process.env.NODE_ENV)
+  console.log('Server running in ' + env)
 
-  if (process.env.NODE_ENV !== 'production') {
-    console.log(`🚀 Server ready at http://localhost:${process.env.PORT}${server.graphqlPath}`)
+  if (env !== 'production') {
+    console.log(`🚀 Server ready at http://localhost:${port}${server.graphqlPath}`)
   } else {
     console.log(`🚀 Server ready at http://localhost`)
   }

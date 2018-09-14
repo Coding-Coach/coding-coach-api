@@ -1,4 +1,4 @@
 type Query {
-  mentee: [User]
-  mentees(id: ID!): User
+  mentees: [User]
+  mentee(id: ID!): User
 }
