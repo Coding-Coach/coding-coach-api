@@ -1,17 +1,13 @@
 {
   "passPerPreset": true,
-  "presets": [
-    "@babel/preset-env",
-  ],
+  "presets": [ "@babel/preset-env" ],
   "plugins": [
     [
       "babel-plugin-inline-import",
       {
-        "extensions": [
-          ".gql",
-          ".graphql"
-        ]
-      }
+        "extensions": [ ".gql", ".graphql" ]
+      },
+      "@babel/plugin-transform-runtime"
     ],
     "@babel/plugin-transform-arrow-functions"
   ]

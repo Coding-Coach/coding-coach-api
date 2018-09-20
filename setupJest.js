@@ -1,6 +1,6 @@
 import { GraphQLClient } from 'graphql-request'
 import mongoose from 'mongoose'
-global.client = new GraphQLClient(`http://localhost:${process.env.PORT || 3000}/graphql`)
+global.client = new GraphQLClient(`http://localhost:${process.env.PORT || 3001}/graphql`)
 
 function clearDatabase() {
   return new Promise((resolve, reject) => {

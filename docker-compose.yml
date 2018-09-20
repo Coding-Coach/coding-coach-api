@@ -9,10 +9,10 @@ services:
       - mongo
     environment:
       PORT: 3030
-      # NODE_ENV: production
+      NODE_ENV: production
       MONGO_DB_URI: mongodb://mongo/coding-coach
     ports:
-      - 127.0.0.1:3030:3030 # for development
+      - 3030:3030 # for development
 
   mongo:
     image: mongo:latest

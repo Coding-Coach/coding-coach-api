@@ -1,12 +1,14 @@
 import mongoose from 'mongoose'
-console.log(process.env.NODE_ENV)
+
 const database = process.env.NODE_ENV === 'test' ? 'test' : 'coding-coach'
-const dbURI = `mongodb://localhost/${database}`
-mongoose.connect(dbURI)
+const dbURI = process.env.MONGO_DB_URI || `mongodb://localhost/${database}`
+console.log(dbURI)
+mongoose.connect(dbURI, { useNewUrlParser: true })
+
 const db = mongoose.connection
 db.on('error', (err) => console.log(err))
 db.once('open', () => {
-  console.log(`Connected to ${dbURI}`)
+  console.log(`Connected to mongodb: ${dbURI}`)
 })
 
 export default db
