@@ -8,12 +8,25 @@
   "private": true,
   "scripts": {
     "start": "nodemon src/index.js",
-    "build": "rm -rf dist && babel src -d dist",
-    "postbuild": "(docker rm -f $(docker ps -aq -f \"ancestor=coding-coach\") || true ) && (docker rmi $(docker images coding-coach -q) || true )&& docker build -t coding-coach .",
-    "serve": "node index.js",
-    "run-docker": "docker run -p 3000:80 coding-coach",
+    "start:test": "NODE_ENV=test npm run start",
+    "build": "babel src -d dist --copy-files",
+    "build:docker": "(docker rm -f $(docker ps -aq -f \"ancestor=coding-coach\") || true ) && (docker rmi $(docker images coding-coach -q) || true )&& docker build -t coding-coach .",
+    "serve": "node dist/index.js",
     "lint": "eslint .",
-    "test": "jest"
+    "test": "jest",
+    "precommit": "lint-staged"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.js": [
+      "prettier --write",
+      "eslint --fix",
+      "git add"
+    ]
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
@@ -39,18 +52,24 @@
     "@babel/core": "^7.0.1",
     "@babel/node": "^7.0.0",
     "@babel/plugin-transform-arrow-functions": "^7.0.0",
-    "@babel/plugin-transform-runtime": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.1.0",
     "@babel/plugin-transform-spread": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "babel-core": "^7.0.0-bridge",
+    "babel-eslint": "^9.0.0",
     "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.2",
     "babel-plugin-inline-import": "^3.0.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "eslint": "^5.5.0",
     "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
     "graphql-request": "^1.8.2",
+    "husky": "^1.0.0-rc.15",
     "jest": "^23.6.0",
+    "lint-staged": "^7.3.0",
     "nodemon": "^1.18.4",
+    "prettier": "^1.14.3",
     "wait-on": "^3.0.1"
   },
   "jest": {

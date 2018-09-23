@@ -2,11 +2,16 @@ FROM node:alpine
 
 RUN mkdir www/
 WORKDIR www/
-ADD dist/ .
-COPY package.json .
-RUN yarn install --production
 
-EXPOSE 80
+# Copy and install dependencies
+COPY package.json yarn.lock* ./
+RUN yarn install
+
+# Compile/Run
+COPY src/ src/
+COPY .babelrc .
+RUN yarn build
+
 EXPOSE 3030
 
 ENV NODE_ENV=production

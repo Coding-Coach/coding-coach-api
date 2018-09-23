@@ -1,1 +1,2 @@
-export { User } from './user'
+/* eslint-disable */
+export { default as User } from './user';

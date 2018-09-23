@@ -1,4 +1,29 @@
-# Coding-Coach-back-end
+# Coding-Coach-api
+
+## Getting Started
+The server can be run in two different modes: `development` and `production`
+
+## Development
+To run the server in `development`:
+1. `yarn install` - This will install the node dependencies
+2. `yarn start` - This will start the server
+
+The server runs in watch mode so changes you make to the API will automatically restart the server
+with those changes.
+
+To write and run tests against the development server:
+1. `yarn start:test` - This will start the server against a test database
+2. `yarn test` OR `yarn test --watch`
+
+## Production
+To run the server in `production`, you will need `Docker`.
+If you don't have Docker installed:
+* Mac users: https://docs.docker.com/docker-for-mac/install/
+* Windows users: https://docs.docker.com/docker-for-windows/
+
+To run the server:
+1. `docker-compose up -d`
+2. The server will be running at `http://localhost:3030/
 
 ## Setup
 Execute the following to get the server running at `http://localhost:3000`
