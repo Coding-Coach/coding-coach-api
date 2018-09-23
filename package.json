@@ -22,7 +22,7 @@
     }
   },
   "lint-staged": {
-    "**/src/**/*.js": [
+    "src/**/*.js": [
       "prettier --write",
       "eslint --fix",
       "git add"
@@ -56,17 +56,20 @@
     "@babel/plugin-transform-spread": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "babel-core": "^7.0.0-bridge",
+    "babel-eslint": "^9.0.0",
     "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.2",
     "babel-plugin-inline-import": "^3.0.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "eslint": "^5.5.0",
     "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
     "graphql-request": "^1.8.2",
     "husky": "^1.0.0-rc.15",
     "jest": "^23.6.0",
     "lint-staged": "^7.3.0",
     "nodemon": "^1.18.4",
+    "prettier": "^1.14.3",
     "wait-on": "^3.0.1"
   },
   "jest": {
