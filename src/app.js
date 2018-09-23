@@ -7,7 +7,7 @@ import resolvers from './resolvers'
 import './db'
 
 const env = process.env.NODE_ENV || 'development'
-const port = process.env.PORT ? process.env.PORT : env === 'test' ? 3001 : 3000
+const port = process.env.PORT || 3000
 const schema = makeExecutableSchema({ typeDefs, resolvers })
 
 const server = new ApolloServer({
