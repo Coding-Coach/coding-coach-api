@@ -1,4 +1,4 @@
-import { User } from '../models'
+import { User } from '../models';
 
 export default {
   Query: {
@@ -6,26 +6,26 @@ export default {
       return User.find({
         $or: [
           {
-            type: 'Mentee'
+            type: 'Mentee',
           },
           {
-            type: 'Both'
-          }
-        ]
-      })
+            type: 'Both',
+          },
+        ],
+      });
     },
     mentee: async (id) => {
       return User.findOne({
         id,
         $or: [
           {
-            type: 'Mentee'
+            type: 'Mentee',
           },
           {
-            type: 'Both'
-          }
-        ]
-      })
-    }
-  }
-}
+            type: 'Both',
+          },
+        ],
+      });
+    },
+  },
+};
