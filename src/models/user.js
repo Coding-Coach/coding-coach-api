@@ -1,10 +1,59 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt-nodejs');
-const SALT_INDEX = 10;
-const Schema = mongoose.Schema;
+import { mongoose } from 'mongoose';
+import { bcrypt } from 'bcrypt-nodejs';
+import { validate } from 'mongoose-validator';
+import { isValidPassword } from 'mongoose-custom-validators';
+
+const { SALT_INDEX } = 10;
+const { Schema } = mongoose.Schema;
+
+const nameValidator = [
+  validate({
+    validator: 'isLength',
+    arguments: [2, 32],
+    message: 'Name should be 2 to 32 characters',
+  }),
+  validate({
+    validator: 'isAlphabetical',
+    arguments: ['/^[a-zA-Z]*$/+[^s-]'],
+    message: 'Name should contain characters from A - Z',
+  }),
+
+  validate({
+    validator: 'isNumeric',
+    no_symbols: false,
+    message: 'There can be no +, -, or .',
+  }),
+];
+
+const emailValidator = [
+  validate({
+    type: String,
+    valiator: 'isLength',
+    arguments: [3, 32],
+    message: 'Name should be btween {ARGS[0]} and {ARGS[1]} characters',
+  }),
+
+  validate({
+    validator: 'isEmail',
+    message: 'Email address invalid',
+  }),
+];
+
+const passwordValidator = [
+  validate({
+    validator: 'isLength',
+    arguments: [8, 32],
+    message: 'Password needs to be between {ARGS[0]} to {ARGS[1]} long',
+  }),
+
+  validate({
+    valiator: str => isValidPassword(str, { minlength: 10 }),
+    message:
+      'Password must have at least: 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.',
+  }),
+];
 
 const UserSchema = new Schema({
-  
   name: {
     first_name: {
       type: String,
@@ -12,9 +61,7 @@ const UserSchema = new Schema({
       lowercase: true,
       trim: true,
       allowNull: false,
-      validate: {
-        len: [1, 30]
-      }
+      validate: nameValidator,
     },
     last_name: {
       type: String,
@@ -22,44 +69,41 @@ const UserSchema = new Schema({
       lowercase: true,
       trim: true,
       allowNull: false,
-      validate: {
-        len: [1, 30]
-      }
-    }
+      validate: nameValidator,
+    },
   },
-  
+
   email: {
-    type:String,
+    type: String,
     require: true,
+    unique: true,
     lowercase: true,
     trim: true,
     allowNull: false,
-      validate: {
-        len: [1, 128]
-      }
+    validate: emailValidator,
   },
 
-  social_media:{
+  social_media: {
+    id: String,
+    token: String,
+    unique: true,
+    default: '',
+
     social_type: {
       default: 'none',
       type: String,
-      enum:['facebook', 'google', 'twitter', 'github', 'none'],
+      enum: ['facebook', 'google', 'twitter', 'github', 'none'],
     },
-
-    id: String,
-    token: String,
   },
 
   password: {
-      type: String,
-      require: true,
-      minlength: 8,
-      maxlength: 32,
-      trim: true,
-      allowNull: false,
-      validate: {
-        len: [8, 32]
-      }
+    type: String,
+    require: true,
+    minlength: 8,
+    maxlength: 32,
+    trim: true,
+    allowNull: false,
+    validate: passwordValidator,
   },
 
   meta: {
@@ -67,37 +111,15 @@ const UserSchema = new Schema({
       createdAt: 'created_at',
       updatedAt: 'updated_at',
       trim: true,
-      validate: {
-        timestamps: Date,
-      }
     },
-   
-  }
+  },
 });
-/// Methonds ------
-//generating hash 
-UserSchema.methods.generateHash = (password)=>{
-  return bcrypt.hash(password, SALT_INDEX).then((hash) => {
-    //Store hash in your password DB
-  });
+
+UserSchema.methods.generateHash = (password) => {
+  return bcrypt.hashSync(password, SALT_INDEX, null);
 };
 
-//check if password is valid
-UserSchema.methods.validPassword = (password)=>{
-  return bcrypt.compare(password, hash, (err, res)=> {
-    if(res) {
-      //password match
-    }else {
-      //password dont match
-    }
-  });
-}
-
-const User = mongoose.model('User', UserSchema);
-export default User;
-
-
-//https://medium.com/silibrain/using-passport-bcrypt-for-full-stack-app-user-authentication-fe30a013604e
-//https://github.com/scotch-io/easy-node-authentication/blob/master/config/passport.js#L58
-
-//dow we wat to us UUID?
+UserSchema.methods.validPassword = (password) => {
+  return bcrypt.compareSync(password, this.local.password);
+};
+module.exports = mongoose.model('User', UserSchema);
