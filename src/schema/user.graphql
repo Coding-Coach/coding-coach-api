@@ -1,20 +1,78 @@
-enum UserType {
-  Mentor
-  Mentee
-  Both
+enum social_type {
+  FACEBOOK
+  GITHUB
+  GOOGLE
+  TWITTER
+  NONE
+}
+
+input nameInput {
+    first_name: String,
+    last_name: String
+}
+
+input emailInput {
+    email: String!
+}
+
+input smInput {
+    social_id: String!,
+    token: String!,
+    social_type: String!
+}
+
+input password {
+    password: String!
 }
 
 type User {
-  id: ID
-  name: String
-  type: UserType
+    id: [ID!]
+    first: String
+    last: String
+    email: [String!]
+    appearsIn: [social_type]!
+    password: [String!]
+    failed_login: {
+      last_attempt: Date,
+      num_failed: Number
+    }
 }
 
-input CreateUserPayload {
-  name: String
-  type: UserType
+query BasicUser: {
+    user(id:ID!)
+    name {
+      first_name
+      last_name
+    }
+    meta {
+      timestamps{
+        createdAt,
+        updatedAt, 
+      }
+    }
+}
+
+query EmailAndLogin  {
+    user(id: ID!)
+    email
+    password
+
+    ...loginMeta
+}
+
+fragment LoginMeta {
+  user(id:ID!)
+  failed_login {
+    last_attempt
+    num_failed
+  }
 }
 
 type Mutation {
-  createUser(data: CreateUserPayload): User
+  id:ID! :User
+  createName(input: nameInput) : User
+  createEmail(input: emailInput) : User
+  createPassword(input: passwordInput) :User
+  createSocial(input: smInput): User
+
 }
