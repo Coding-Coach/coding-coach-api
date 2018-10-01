@@ -72,8 +72,9 @@ const UserSchema = new Schema({
       validate: nameValidator,
     },
   },
-
+  
   email: {
+    id: ID,
     type: String,
     require: true,
     unique: true,
@@ -84,7 +85,8 @@ const UserSchema = new Schema({
   },
 
   social_media: {
-    id: String,
+    id, ID,
+    social_id: String,
     token: String,
     unique: true,
     default: '',
@@ -112,6 +114,14 @@ const UserSchema = new Schema({
       updatedAt: 'updated_at',
       trim: true,
     },
+    failedLogin: {
+      last_attempt: Date,
+      failed: {
+        type: Number,
+        default: 0,
+        max: 5,
+      }
+    }
   },
 });
 
@@ -123,3 +133,4 @@ UserSchema.methods.validPassword = (password) => {
   return bcrypt.compareSync(password, this.local.password);
 };
 module.exports = mongoose.model('User', UserSchema);
+d
