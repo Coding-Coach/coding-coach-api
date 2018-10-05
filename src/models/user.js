@@ -3,7 +3,7 @@ import { bcrypt } from 'bcrypt-nodejs';
 import { validate } from 'mongoose-validator';
 import { isValidPassword } from 'mongoose-custom-validators';
 
-const { SALT_INDEX } = 10;
+const saltIndex = 10;
 const { Schema } = mongoose.Schema;
 
 const nameValidator = [
@@ -53,28 +53,27 @@ const passwordValidator = [
   }),
 ];
 
-const UserSchema = new Schema({
-  name: {
-    first_name: {
-      type: String,
-      require: true,
-      lowercase: true,
-      trim: true,
-      allowNull: false,
-      validate: nameValidator,
-    },
-    last_name: {
-      type: String,
-      require: true,
-      lowercase: true,
-      trim: true,
-      allowNull: false,
-      validate: nameValidator,
-    },
+const userSchema = new Schema({
+  firstName: {
+    type: String,
+    require: true,
+    lowercase: true,
+    trim: true,
+    allowNull: false,
+    validate: nameValidator,
   },
-  
+
+  lastName: {
+    type: String,
+    require: true,
+    lowercase: true,
+    trim: true,
+    allowNull: false,
+    validate: nameValidator,
+  },
+
   email: {
-    id: ID,
+    id: Schema.Types.Objectid,
     type: String,
     require: true,
     unique: true,
@@ -84,14 +83,14 @@ const UserSchema = new Schema({
     validate: emailValidator,
   },
 
-  social_media: {
-    id, ID,
-    social_id: String,
+  socialMedia: {
+    id: Schema.Types.Objectid,
+    socialID: String,
     token: String,
     unique: true,
     default: '',
 
-    social_type: {
+    socialType: {
       default: 'none',
       type: String,
       enum: ['facebook', 'google', 'twitter', 'github', 'none'],
@@ -110,27 +109,26 @@ const UserSchema = new Schema({
 
   meta: {
     timestamps: {
-      createdAt: 'created_at',
-      updatedAt: 'updated_at',
+      createdAt: 'createdAt',
+      updatedAt: 'updatedAt',
       trim: true,
     },
     failedLogin: {
-      last_attempt: Date,
-      failed: {
+      lastAttempt: Date,
+      numFailed: {
         type: Number,
         default: 0,
         max: 5,
-      }
-    }
+      },
+    },
   },
 });
 
-UserSchema.methods.generateHash = (password) => {
-  return bcrypt.hashSync(password, SALT_INDEX, null);
+userSchema.methods.generateHash = (password) => {
+  return bcrypt.hashSync(password, saltIndex, null);
 };
 
-UserSchema.methods.validPassword = (password) => {
+userSchema.methods.validPassword = (password) => {
   return bcrypt.compareSync(password, this.local.password);
 };
-module.exports = mongoose.model('User', UserSchema);
-d
+module.exports = mongoose.model('User', userSchema);
