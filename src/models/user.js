@@ -29,8 +29,8 @@ const emailValidator = [
   validate({
     type: String,
     valiator: 'isLength',
-    arguments: [3, 32],
-    message: 'Name should be btween {ARGS[0]} and {ARGS[1]} characters',
+    arguments: [4, 32],
+    message: 'Name should be between 4 and 32 characters',
   }),
 
   validate({
@@ -43,7 +43,7 @@ const passwordValidator = [
   validate({
     validator: 'isLength',
     arguments: [8, 32],
-    message: 'Password needs to be between {ARGS[0]} to {ARGS[1]} long',
+    message: 'Password needs to be between 8 to 32 characters long',
   }),
 
   validate({
@@ -57,7 +57,6 @@ const userSchema = new Schema({
   firstName: {
     type: String,
     require: true,
-    lowercase: true,
     trim: true,
     allowNull: false,
     validate: nameValidator,
@@ -66,7 +65,6 @@ const userSchema = new Schema({
   lastName: {
     type: String,
     require: true,
-    lowercase: true,
     trim: true,
     allowNull: false,
     validate: nameValidator,
@@ -85,6 +83,10 @@ const userSchema = new Schema({
 
   socialMedia: {
     id: Schema.Types.Objectid,
+    exist: {
+      type: Boolean,
+      default: false,
+    },
     socialID: String,
     token: String,
     unique: true,
@@ -103,12 +105,15 @@ const userSchema = new Schema({
     minlength: 8,
     maxlength: 32,
     trim: true,
-    allowNull: false,
     validate: passwordValidator,
   },
 
   meta: {
-    timestamps: {
+    activationStatus: {
+      default: 0,
+      type: Boolean,
+    },
+    timeStamps: {
       createdAt: 'createdAt',
       updatedAt: 'updatedAt',
       trim: true,
