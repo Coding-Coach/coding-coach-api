@@ -93,7 +93,7 @@ Please Note that before you run the command:
 ```
 $ git pull upstream development
 ```
-you need have have ssh-key setup and added to your github account.
+you need to have ssh-key setup and added to your github account.
 
 If you are yet to setup ssh-key visit the link below:
 
