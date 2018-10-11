@@ -89,6 +89,16 @@ After this, your commits will be on top of the development commits. From here yo
 
 You might have some conflicts while rebasing, try to resolve the conflicts for each individual commit. Rebasing is intimidating at the begining, if you need help don't be afraid to reach out in slack.
 
+Please Note that before you run the command:
+```
+$ git pull upstream development
+```
+you need have have ssh-key setup and added to your github account.
+
+If you are yet to setup ssh-key visit the link below:
+
+* https://help.github.com/articles/connecting-to-github-with-ssh/
+
 ### PRs
 In order to merge a PR, there should be a couple of approval reviews. Once is approved, we should merge to the development branch using the Squash button in github.
 
