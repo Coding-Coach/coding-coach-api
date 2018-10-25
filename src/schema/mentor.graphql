@@ -1,3 +1,8 @@
+type User {
+  firstName: String!
+  lastName: String!
+}
+
 type Query {
   mentors: [User]
   mentor(id: ID!): User

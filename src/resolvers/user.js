@@ -9,9 +9,13 @@ export default {
       },
     ) {
       return User.create({
-        name,
+        firstName: name.split(' ')[0],
+        lastName: name.split(' ')[1],
         type,
       });
     },
+  },
+  User: {
+    name: ({ firstName, lastName }) => `${firstName} ${lastName}`,
   },
 };

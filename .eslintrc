@@ -11,6 +11,10 @@
     "no-console": 0
   },
   "env": {
-    "mocha": true
+    "mocha": true,
+    "jest": true
+  },
+  "globals": {
+    "client": true
   }
 }

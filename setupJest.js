@@ -1,5 +1,6 @@
 import { GraphQLClient } from 'graphql-request';
 import mongoose from 'mongoose';
+
 global.client = new GraphQLClient(`http://localhost:${process.env.PORT || 3000}/graphql`);
 
 function clearDatabase() {
@@ -8,8 +9,8 @@ function clearDatabase() {
       if (err) reject(err);
       if (collections.length === 0) resolve();
       collections.forEach(({ name }, i) => {
-        mongoose.connection.db.dropCollection(name, (err) => {
-          if (err) reject(err);
+        mongoose.connection.db.dropCollection(name, (_err) => {
+          if (_err) reject(_err);
           if (i === collections.length - 1) resolve();
         });
       });
