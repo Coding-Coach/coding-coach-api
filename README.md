@@ -12,9 +12,10 @@ To run the server in `development`:
 The server runs in watch mode so changes you make to the API will automatically restart the server
 with those changes.
 
-To write and run tests against the development server:
-1. `yarn start:test` - This will start the server against a test database
-2. `yarn test` OR `yarn test --watch`
+GraphQL Playground at : http://localhost:3000/graphql
+Dummy Endpoint : http://localhost:3000/hello
+
+> Note that this does not start a MongoDB database, ensure an instance is running at `localhost:27017`.
 
 ## Production
 To run the server in `production`, you will need `Docker`.
@@ -24,36 +25,31 @@ If you don't have Docker installed:
 
 To run the server:
 1. `docker-compose up -d`
-2. The server will be running at `http://localhost:3030/
+2. The server will be running at `http://localhost:3030/`
 
-## Setup
-Execute the following to get the server running at `http://localhost:3000`
+> Note that using `docker-compose up` will also start a MongoDB container.
+
+## Build
+To build the API project and create the `production` version in the `dist` folder, run:
 ```
-npm install
-npm run start
-```
-
-GraphQL Playground at : http://localhost:3000/graphql
-Dummy Endpoint : http://localhost:3000/hello
-
-## Build and Docker
-
-The following command will create the `production` version code in the `dist` folder and create a docker image `coding-coach`
-```
-npm run build
+yarn build
 ```
 
-You can launch the docker image with
-
+## Build docker image
+To build the docker image for the API project, run:
 ```
-npm run run-docker
+yarn build:docker
+```
 
-OR
-
+If you want to start a container based on this image, run:
+```
 docker run -p 3000:80 coding-coach
 ```
 
-The application, when built and run with docker, runs with `NODE_ENV` set to `production` on http://localhost:3000
+## Tests
+To write and run tests against the development server:
+1. `yarn start:test` - This will start the server against a test database
+2. `yarn test` OR `yarn test --watch`
 
 ## Coding Coach Board
 In order to organize all the work, we are using https://zenhub.com to keep track of all the epics and tasks. After you login to ZenHub search for the Coding-Coach/coding-coach repository, make sure you don't add someone else fork.
