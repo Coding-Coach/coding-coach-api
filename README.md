@@ -1,4 +1,5 @@
 # Coding-Coach-api
+[![Build Status](https://api.travis-ci.org/Coding-Coach/coding-coach-api.svg?branch=development)](https://travis-ci.org/Coding-Coach/coding-coach-api)
 
 ## Getting Started
 The server can be run in two different modes: `development` and `production`
