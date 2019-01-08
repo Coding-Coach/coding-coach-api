@@ -71,7 +71,7 @@
     "husky": "^1.0.0-rc.15",
     "jest": "^23.6.0",
     "lint-staged": "^7.3.0",
-    "nodemon": "^1.18.4",
+    "nodemon": "^1.18.9",
     "prettier": "^1.14.3",
     "wait-on": "^3.0.1"
   },
