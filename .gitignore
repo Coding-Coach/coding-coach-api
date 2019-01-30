@@ -6,3 +6,7 @@ dist/
 .DS_Store
 /coverage
 .env
+logs/
+**/*.log
+production.server.crt
+production.server.key

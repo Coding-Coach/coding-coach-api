@@ -35,12 +35,13 @@ const passwordValidator = [
 
 const userSchema = new mongoose.Schema({
   firstName: String,
-
   lastName: String,
-
+  facebook: Object,
+  twitter: Object,
+  github: Object,
   email: {
     type: String,
-    require: false,
+    require: true,
     unique: true,
     lowercase: true,
     trim: true,
@@ -81,4 +82,53 @@ userSchema.methods.validPassword = (password) => {
   return bcrypt.compareSync(password, this.local.password);
 };
 
-export default mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
+
+export const findOrCreateUser = (profile) => {
+  const {
+    id, email, firstName, lastName, provider,
+  } = profile;
+  let record;
+
+  return new Promise((resolve, reject) => {
+    User.findOne({ email }, (err, doc) => {
+      if (err) {
+        reject(err);
+      } else if (!doc) {
+        record = {
+          email,
+          firstName,
+          lastName,
+        };
+        record[provider] = {
+          ...profile,
+        };
+        User.create(record, (createerr, saveddoc) => {
+          if (!createerr) {
+            INFO({ type: 'NEW_USER', email, provider });
+            resolve(saveddoc);
+          } else {
+            reject(createerr);
+          }
+        });
+      } else if (doc[provider] && doc[provider].id === id.toString()) {
+        resolve(doc);
+      } else {
+        // eslint-disable-next-line no-param-reassign
+        doc[provider] = {
+          ...profile,
+        };
+        doc.save((updateerr, updatedrecord) => {
+          if (updateerr) {
+            reject(updateerr);
+          } else {
+            INFO({ type: 'UPDATE_USER', email, provider });
+            resolve(updatedrecord);
+          }
+        });
+      }
+    });
+  });
+};
+
+export default User;

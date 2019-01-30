@@ -1,6 +1,6 @@
 {
   "verbose": true,
-  "ignore": [ "node_modules" ],
+  "ignore": ["node_modules"],
   "env": {
     "BABEL_DISABLE_CACHE": 1
   },
@@ -8,5 +8,5 @@
     "js": "babel-node"
   },
   "ext": ".js,.json,.graphql,.gql",
-  "watch": "./"
+  "watch": "src/"
 }

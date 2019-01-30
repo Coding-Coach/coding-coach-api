@@ -4,6 +4,13 @@
     "airbnb/base",
     "plugin:import/errors"
   ],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "moduleDirectory": ["node_modules", "src/"]
+      }
+    }
+  },
   "rules": {
     "no-use-before-define": 0,
     "arrow-body-style": 0,
@@ -15,6 +22,10 @@
     "jest": true
   },
   "globals": {
-    "client": true
+    "client": true,
+    "LOGS_FOLDER": true,
+    "INFO": true,
+    "ERROR": true,
+    "WARN": true
   }
 }

@@ -1,9 +1,35 @@
 # Coding-Coach-api
 [![Build Status](https://api.travis-ci.org/Coding-Coach/coding-coach-api.svg?branch=development)](https://travis-ci.org/Coding-Coach/coding-coach-api)
 
-## Getting Started
-The server can be run in two different modes: `development` and `production`
 
+# Important INSTRUCTIONS for Developers
+Copy `.env.sample` to `.env` as it contains the ENV configurations needed during bootstrapping the appliation. DO NOT commit the .env file.
+If you have changes that are need on bootstrap, add it to the `.env.sample` file, and ensure you have handled the missing values in your code.
+
+You need to run the server in HTTPS Mode, to ensure you don't get conflicts in your browser.
+A `development.pem` has been provided in `src/certs`.
+
+#### Mac Users
+Open Keychain Access and import the root certificate `development.pem` in `src/certs` to your System keychain. Then right click on `codingcoach` in Keychain and select `Get info`. Expand `Trust` and mark the certificate to `Always Trust`.
+
+#### Linux Users
+Depending on your Linux distribution, you can use `trust`, `update-ca-certificates` or another command to mark the generated root certificate as trusted. [TODO: add detailed instructions].
+
+#### Windows Users
+*No clues as how to do this at this point.*
+
+Add an alias in your `/etc/hosts` for `codingcoach.dev`.
+
+```
+# /etc/hosts
+# Host Database
+#
+# localhost is used to configure the loopback interface
+# when the system is booting.  Do not change this entry.
+##
+127.0.0.1	localhost
+127.0.0.1 api.codingcoach.dev
+```
 ## Development
 To run the server in `development`:
 1. `yarn install` - This will install the node dependencies
@@ -12,8 +38,7 @@ To run the server in `development`:
 The server runs in watch mode so changes you make to the API will automatically restart the server
 with those changes.
 
-GraphQL Playground at : http://localhost:3000/graphql
-Dummy Endpoint : http://localhost:3000/hello
+GraphQL Playground at : https://codingcoach.dev:3001/graphql
 
 > Note that this does not start a MongoDB database, ensure an instance is running at `localhost:27017`.
 

@@ -4,9 +4,24 @@ enum UserType {
   Both
 }
 
+type NameObject{
+  familyName: String
+  givenName: String
+  middleName: String
+}
+
+type EmailObject{
+  value: String!
+  type: String
+}
+
 type User {
   id: ID
-  name: String
+  provider: String
+  displayName: String
+  name: NameObject
+  emails: [EmailObject!]
+  photos: [String]
   type: UserType
 }
 

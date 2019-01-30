@@ -1,0 +1,53 @@
+resources:
+- repo: self
+
+pool:
+  vmImage: Hosted Ubuntu 1604
+  demands:
+  - node
+  - npm
+
+variables:
+  resourcegroup: 'coding-coach-rg'
+  location: 'West Europe'
+  registry: 'codingcoachacr'
+  beimage: 'codingcoachbe'
+
+steps:
+- task: AzureResourceGroupDeployment@2
+  displayName: 'Azure Deployment:Create Or Update Resource Group action on $(resourcegroup)'
+  inputs:
+    azureSubscription: 'Free Trial (15d1a0f0-8a6b-470e-9cd2-eef5ba7c5a5a)'
+    resourceGroupName: '$(resourcegroup)'
+    location: '$(location)'
+    csmFile: '$(System.DefaultWorkingDirectory)/azure-templates/container-registry-template.json'
+    overrideParameters: '-registryName "$(registry)" -registryLocation "$(location)" -registrySku "Basic"'
+
+- task: NodeTool@0
+  displayName: 'Use Node 10'
+  inputs:
+    versionSpec: 10.x
+    checkLatest: true
+
+- task: Npm@1
+  displayName: 'Install all dependencies'
+  inputs:
+    workingDir: '$(System.DefaultWorkingDirectory)'
+    verbose: false
+
+- task: Docker@1
+  displayName: 'Build an image'
+  inputs:
+    azureSubscriptionEndpoint: 'Free Trial (15d1a0f0-8a6b-470e-9cd2-eef5ba7c5a5a)'
+    azureContainerRegistry: '$(registry).azurecr.io'
+    useDefaultContext: false
+    buildContext: '$(System.DefaultWorkingDirectory)'
+    imageName: '$(beimage):$(Build.BuildId)'
+
+- task: Docker@1
+  displayName: 'Publish an image'
+  inputs:
+    azureSubscriptionEndpoint: 'Free Trial (15d1a0f0-8a6b-470e-9cd2-eef5ba7c5a5a)'
+    azureContainerRegistry: '$(registry).azurecr.io'
+    command: 'Push an image'
+    imageName: '$(beimage):$(Build.BuildId)'
