@@ -1,3 +1,6 @@
+trigger:
+ branches:
+   include: ['development']
 resources:
 - repo: self
 
