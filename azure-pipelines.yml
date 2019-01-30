@@ -1,26 +1,26 @@
+name: $(date:yyyyMMdd)$(rev:.r)
 trigger:
  branches:
    include: ['development']
+
 resources:
 - repo: self
 
 pool:
   vmImage: Hosted Ubuntu 1604
-  demands:
-  - node
-  - npm
 
 variables:
   resourcegroup: 'coding-coach-rg'
   location: 'West Europe'
   registry: 'codingcoachacr'
   beimage: 'codingcoachbe'
+  subscription: 'coding-coach-service-connection'
 
 steps:
 - task: AzureResourceGroupDeployment@2
   displayName: 'Azure Deployment:Create Or Update Resource Group action on $(resourcegroup)'
   inputs:
-    azureSubscription: 'Free Trial (15d1a0f0-8a6b-470e-9cd2-eef5ba7c5a5a)'
+    azureSubscription: '$(subscription)'
     resourceGroupName: '$(resourcegroup)'
     location: '$(location)'
     csmFile: '$(System.DefaultWorkingDirectory)/azure-templates/container-registry-template.json'
@@ -41,7 +41,7 @@ steps:
 - task: Docker@1
   displayName: 'Build an image'
   inputs:
-    azureSubscriptionEndpoint: 'Free Trial (15d1a0f0-8a6b-470e-9cd2-eef5ba7c5a5a)'
+    azureSubscriptionEndpoint: '$(subscription)'
     azureContainerRegistry: '$(registry).azurecr.io'
     useDefaultContext: false
     buildContext: '$(System.DefaultWorkingDirectory)'
@@ -50,7 +50,7 @@ steps:
 - task: Docker@1
   displayName: 'Publish an image'
   inputs:
-    azureSubscriptionEndpoint: 'Free Trial (15d1a0f0-8a6b-470e-9cd2-eef5ba7c5a5a)'
+    azureSubscriptionEndpoint: '$(subscription)'
     azureContainerRegistry: '$(registry).azurecr.io'
     command: 'Push an image'
     imageName: '$(beimage):$(Build.BuildId)'
