@@ -54,3 +54,14 @@ steps:
     azureContainerRegistry: '$(registry).azurecr.io'
     command: 'Push an image'
     imageName: '$(beimage):$(Build.BuildId)'
+
+- task: CopyFiles@2
+  displayName: 'Copy App templates'
+  inputs:
+    SourceFolder: azure-templates
+    TargetFolder: '$(build.artifactstagingdirectory)'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'
