@@ -46,7 +46,7 @@ steps:
     resourceGroupName: '$(resourcegroup)'
     location: '$(location)'
     csmFile: '$(System.DefaultWorkingDirectory)/azure-templates/container-webapp-template.json'
-    overrideParameters: '-webAppName $(beimage) -hostingPlanName $(plan) -appInsightsLocation "$(location)" -sku "$(sku)" -registryName "$(registry)" -registryLocation "$(location)" -registrySku "$(registrySku)" -imageName $(beimage):$(date:yyyyMMdd)$(rev:.r)'
+    overrideParameters: '-webAppName $(beimage) -hostingPlanName $(plan) -appInsightsLocation "$(location)" -sku "$(sku)" -registryName "$(registry)" -registryLocation "$(location)" -registrySku "$(registrySku)" -imageName $(beimage):$(Build.BuildNumber)'
 
 - task: Docker@1
   displayName: 'Build an image'
@@ -55,7 +55,7 @@ steps:
     azureContainerRegistry: '$(registry).azurecr.io'
     useDefaultContext: false
     buildContext: '$(System.DefaultWorkingDirectory)'
-    imageName: '$(beimage):$(Build.BuildId)'
+    imageName: '$(beimage):$(Build.BuildNumber)'
 
 - task: Docker@1
   displayName: 'Publish an image'
@@ -63,7 +63,7 @@ steps:
     azureSubscriptionEndpoint: '$(subscription)'
     azureContainerRegistry: '$(registry).azurecr.io'
     command: 'Push an image'
-    imageName: '$(beimage):$(Build.BuildId)'
+    imageName: '$(beimage):$(Build.BuildNumber)'
 
 - task: CopyFiles@2
   displayName: 'Copy App templates'
