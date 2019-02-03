@@ -12,8 +12,8 @@ pool:
 variables:
   resourcegroup: 'coding-coach-rg'
   location: 'West Europe'
-  registry: 'codingcoachacr'
-  beimage: 'codingcoachbe'
+  registry: 'coding-coach-acr'
+  beimage: 'coding-coach-be'
   subscription: 'coding-coach-service-connection'
   devdbname: 'coding-coach-dev-db'
   plan: 'coding-coach-plan'
