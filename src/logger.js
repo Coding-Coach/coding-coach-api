@@ -24,19 +24,19 @@ const logger = winston.createLogger({
   transports: [
     new winston.transports.File({
       level: 'info',
-      filename: `${process.env.LOGS_FOLDER}/${process.env.INFO_LOG}`,
+      filename: `${process.env.LOGS_FOLDER}/${process.env.INFO_LOG || 'info.log'}`,
       handleExceptions: true,
       json: true,
     }),
     new winston.transports.File({
       level: 'error',
-      filename: `${process.env.LOGS_FOLDER}/${process.env.ERROR_LOG}`,
+      filename: `${process.env.LOGS_FOLDER}/${process.env.ERROR_LOG || 'error.log'}`,
       handleExceptions: true,
       json: true,
     }),
     new winston.transports.File({
       level: 'warn',
-      filename: `${process.env.LOGS_FOLDER}/${process.env.WARNINGS_LOG}`,
+      filename: `${process.env.LOGS_FOLDER}/${process.env.WARNINGS_LOG || 'warn.log'}`,
       handleExceptions: true,
       json: true,
     }),

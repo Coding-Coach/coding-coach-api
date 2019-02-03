@@ -36,18 +36,6 @@ steps:
     csmFile: '$(System.DefaultWorkingDirectory)/azure-templates/container-cosmosdb-template.json'
     overrideParameters: '-name "$(devdbname)"'
 
-- task: NodeTool@0
-  displayName: 'Use Node 10'
-  inputs:
-    versionSpec: 10.x
-    checkLatest: true
-
-- task: Npm@1
-  displayName: 'Install all dependencies'
-  inputs:
-    workingDir: '$(System.DefaultWorkingDirectory)'
-    verbose: false
-
 - task: Docker@1
   displayName: 'Build an image'
   inputs:
