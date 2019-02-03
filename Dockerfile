@@ -28,7 +28,7 @@ RUN yarn install --production=true
 COPY --from=builder /www/dist ./dist
 
 # Expose port 3030
-EXPOSE 3030
+EXPOSE 80
 
 # Set the node_environment to production
 ENV NODE_ENV=production

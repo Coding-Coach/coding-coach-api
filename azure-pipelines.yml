@@ -15,16 +15,26 @@ variables:
   registry: 'codingcoachacr'
   beimage: 'codingcoachbe'
   subscription: 'coding-coach-service-connection'
+  devdbname: 'coding-coach-dev-db'
 
 steps:
 - task: AzureResourceGroupDeployment@2
-  displayName: 'Azure Deployment:Create Or Update Resource Group action on $(resourcegroup)'
+  displayName: 'Create or update Private Docker registry'
   inputs:
     azureSubscription: '$(subscription)'
     resourceGroupName: '$(resourcegroup)'
     location: '$(location)'
     csmFile: '$(System.DefaultWorkingDirectory)/azure-templates/container-registry-template.json'
     overrideParameters: '-registryName "$(registry)" -registryLocation "$(location)" -registrySku "Basic"'
+
+- task: AzureResourceGroupDeployment@2
+  displayName: 'Create or update Private MongoDB'
+  inputs:
+    azureSubscription: '$(subscription)'
+    resourceGroupName: '$(resourcegroup)'
+    location: '$(location)'
+    csmFile: '$(System.DefaultWorkingDirectory)/azure-templates/container-cosmosdb-template.json'
+    overrideParameters: '-name "$(devdbname)"'
 
 - task: NodeTool@0
   displayName: 'Use Node 10'

@@ -3,26 +3,49 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "registryName": {
-      "type": "String"
+      "type": "string",
+      "metadata": {
+        "description": "The name of the container registry."
+      }
     },
     "registryLocation": {
-      "type": "String"
+      "type": "string",
+      "metadata": {
+        "description": "The location of the container registry. This cannot be changed after the resource is created."
+      }
     },
     "registrySku": {
-      "defaultValue": "Standard",
-      "type": "String"
+      "type": "string",
+      "defaultValue": "Basic",
+      "metadata": {
+        "description": "The SKU of the container registry."
+      }
+    },
+    "registryApiVersion": {
+      "type": "string",
+      "defaultValue": "2017-10-01",
+      "metadata": {
+        "description": "The API version of the container registry."
+      }
+    },
+    "adminUserEnabled": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "The value that indicates whether the admin user is enabled."
+      }
     }
   },
   "resources": [{
+    "name": "[parameters('registryName')]",
     "type": "Microsoft.ContainerRegistry/registries",
+    "location": "[parameters('registryLocation')]",
+    "apiVersion": "[parameters('registryApiVersion')]",
     "sku": {
       "name": "[parameters('registrySku')]"
     },
-    "name": "[parameters('registryName')]",
-    "apiVersion": "2017-10-01",
-    "location": "[parameters('registryLocation')]",
     "properties": {
-      "adminUserEnabled": "true"
+      "adminUserEnabled": "[parameters('adminUserEnabled')]"
     }
   }]
 }

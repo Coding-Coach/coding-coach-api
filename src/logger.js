@@ -1,6 +1,8 @@
 import winston from 'winston';
 import fs from 'fs';
 
+process.env.LOGS_FOLDER = process.env.LOGS_FOLDER || 'logs';
+
 if (!fs.existsSync(process.env.LOGS_FOLDER)) {
   fs.mkdirSync(process.env.LOGS_FOLDER);
 }
@@ -9,7 +11,9 @@ const MESSAGE = Symbol.for('message');
 
 const jsonFormatter = (logEntry) => {
   const modifiedLog = logEntry;
-  const base = { timestamp: new Date() };
+  const base = {
+    timestamp: new Date(),
+  };
   const json = Object.assign(base, logEntry);
   modifiedLog[MESSAGE] = JSON.stringify(json);
   return modifiedLog;
@@ -54,7 +58,10 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const log = (level, message) => {
-  logger.log({ level, message });
+  logger.log({
+    level,
+    message,
+  });
 };
 
 global.ERROR = (message) => {
