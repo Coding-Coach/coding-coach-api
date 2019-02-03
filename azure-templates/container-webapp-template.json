@@ -63,6 +63,10 @@
             {
               "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
               "value": "[reference(resourceId('microsoft.insights/components/', parameters('webAppName')), '2015-05-01').InstrumentationKey]"
+            },
+            {
+              "name": "MONGO_DB_URI",
+              "value": ""
             }
           ],
           "appCommandLine": "[parameters('startupCommand')]",

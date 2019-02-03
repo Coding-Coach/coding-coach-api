@@ -16,6 +16,9 @@ variables:
   beimage: 'codingcoachbe'
   subscription: 'coding-coach-service-connection'
   devdbname: 'coding-coach-dev-db'
+  plan: 'coding-coach-plan'
+  sku: 'B1 Basic'
+  registrySku: 'Basic'
 
 steps:
 - task: AzureResourceGroupDeployment@2
@@ -35,6 +38,15 @@ steps:
     location: '$(location)'
     csmFile: '$(System.DefaultWorkingDirectory)/azure-templates/container-cosmosdb-template.json'
     overrideParameters: '-name "$(devdbname)"'
+
+- task: AzureResourceGroupDeployment@2
+  displayName: 'Create or Update Azure App Service'
+  inputs:
+    azureSubscription: '$(subscription)'
+    resourceGroupName: '$(resourcegroup)'
+    location: '$(location)'
+    csmFile: '$(System.DefaultWorkingDirectory)/azure-templates/container-webapp-template.json'
+    overrideParameters: '-webAppName $(beimage) -hostingPlanName $(plan) -appInsightsLocation "$(location)" -sku "$(sku)" -registryName "$(registry)" -registryLocation "$(location)" -registrySku "$(registrySku)" -imageName $(beimage):$(date:yyyyMMdd)$(rev:.r)'
 
 - task: Docker@1
   displayName: 'Build an image'

@@ -4,12 +4,12 @@ const database = process.env.NODE_ENV === 'test' ? 'test' : 'coding-coach';
 const dbURI = process.env.MONGO_DB_URI || `mongodb://localhost/${database}`;
 mongoose.connect(
   dbURI, {
-    useNewUrlParser: true
+    useNewUrlParser: true,
   },
 );
 
 const db = mongoose.connection;
-db.on('error', err => {
+db.on('error', (err) => {
   console.log('error with mongodb connection');
   console.log(err);
   ERROR(err);
