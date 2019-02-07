@@ -8,9 +8,6 @@
     "hostingPlanName": {
       "type": "String"
     },
-    "appInsightsLocation": {
-      "type": "String"
-    },
     "sku": {
       "defaultValue": "Standard",
       "type": "String"
@@ -33,7 +30,8 @@
       "type": "String"
     }
   },
-  "resources": [{
+  "resources": [
+    {
       "type": "Microsoft.Web/sites",
       "name": "[parameters('webAppName')]",
       "apiVersion": "2016-03-01",
@@ -44,7 +42,8 @@
       "properties": {
         "name": "[parameters('webAppName')]",
         "siteConfig": {
-          "appSettings": [{
+          "appSettings": [
+            {
               "name": "DOCKER_REGISTRY_SERVER_URL",
               "value": "[concat('https://', reference(concat('Microsoft.ContainerRegistry/registries/', parameters('registryName'))).loginServer)]"
             },
@@ -61,10 +60,6 @@
               "value": "false"
             },
             {
-              "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
-              "value": "[reference(resourceId('microsoft.insights/components/', parameters('webAppName')), '2015-05-01').InstrumentationKey]"
-            },
-            {
               "name": "MONGO_DB_URI",
               "value": ""
             }
@@ -76,8 +71,7 @@
         "hostingEnvironment": ""
       },
       "dependsOn": [
-        "[concat('Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
-        "[resourceId('microsoft.insights/components/', parameters('webAppName'))]"
+        "[concat('Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]"
       ]
     },
     {
@@ -108,19 +102,6 @@
         "reserved": true,
         "numberOfWorkers": "1",
         "hostingEnvironment": ""
-      }
-    },
-    {
-      "type": "Microsoft.Insights/components",
-      "name": "[parameters('webAppName')]",
-      "apiVersion": "2014-04-01",
-      "location": "[parameters('appInsightsLocation')]",
-      "tags": {
-        "[concat('hidden-link:', resourceGroup().id, '/providers/Microsoft.Web/sites/', parameters('webAppName'))]": "Resource"
-      },
-      "properties": {
-        "applicationId": "[parameters('webAppName')]",
-        "Request_Source": "AzureTfsExtensionAzureProject"
       }
     }
   ]
