@@ -46,7 +46,7 @@ steps:
     resourceGroupName: '$(resourcegroup)'
     location: '$(location)'
     csmFile: '$(System.DefaultWorkingDirectory)/azure-templates/container-webapp-template.json'
-    overrideParameters: '-webAppName $(beimage) -hostingPlanName $(plan) -appInsightsLocation "$(location)" -sku "$(sku)" -registryName "$(registry)" -registryLocation "$(location)" -registrySku "$(registrySku)" -imageName $(beimage):$(Build.BuildNumber)'
+    overrideParameters: '-webAppName $(beimage) -hostingPlanName $(plan) -sku "$(sku)" -registryName "$(registry)" -registryLocation "$(location)" -registrySku "$(registrySku)" -imageName $(beimage):$(Build.BuildNumber)'
 
 - task: Docker@1
   displayName: 'Build an image'
