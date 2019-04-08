@@ -1,12 +1,8 @@
-node_modules/
-build/
-dist/
-.idea/
-.vscode/
+# package directories
+node_modules
+jspm_packages
+
+# Serverless directories
+.serverless
+
 .DS_Store
-/coverage
-.env
-logs/
-**/*.log
-production.server.crt
-production.server.key

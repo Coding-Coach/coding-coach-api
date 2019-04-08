@@ -1,4 +1,0 @@
-type Query {
-  mentees: [User]
-  mentee(id: ID!): User
-}

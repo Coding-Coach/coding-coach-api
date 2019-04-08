@@ -1,102 +1,13 @@
 {
-  "name": "coding-coach-api",
-  "version": "0.0.1",
-  "description": "Application to serve Coding Coach FE",
-  "main": "src/index.js",
-  "repository": "https://github.com/Coding-Coach/coding-coach-api",
-  "license": "MIT",
-  "private": true,
-  "scripts": {
-    "start": "nodemon src/index.js",
-    "start:test": "NODE_ENV=test npm run start",
-    "build": "babel src -d dist --copy-files --ignore '**/*.test.js' --ignore '**/__test__'",
-    "build:docker": "(docker rm -f $(docker ps -aq -f \"ancestor=coding-coach\") || true ) && (docker rmi $(docker images coding-coach -q) || true )&& docker build -t coding-coach .",
-    "serve": "node dist/index.js",
-    "lint": "eslint .",
-    "test": "jest",
-    "precommit": "lint-staged"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "src/**/*.js": [
-      "prettier --write",
-      "eslint --fix",
-      "git add"
-    ]
-  },
-  "dependencies": {
-    "@babel/polyfill": "^7.0.0",
-    "@babel/runtime": "^7.0.0",
-    "apollo-server": "^2.0.7",
-    "apollo-server-express": "^2.0.6",
-    "bcrypt-nodejs": "^0.0.3",
-    "body-parser": "^1.18.3",
-    "connect-mongodb-session": "^2.0.6",
-    "cors": "^2.8.4",
-    "dotenv": "^6.0.0",
-    "express": "^4.16.3",
-    "express-session": "^1.15.6",
-    "graphql": "^14.0.2",
-    "graphql-request": "^1.8.2",
-    "graphql-tools": "^3.1.1",
-    "helmet": "^3.13.0",
-    "lodash": "^4.17.10",
-    "lusca": "^1.6.1",
-    "merge-graphql-schemas": "^1.5.3",
-    "mongoose": "^5.2.14",
-    "mongoose-custom-validators": "^0.0.4",
-    "mongoose-validator": "^2.1.0",
-    "morgan": "^1.9.1",
-    "passport": "^0.4.0",
-    "passport-facebook": "^2.1.1",
-    "passport-github2": "^0.1.11",
-    "passport-twitter": "^1.0.4",
-    "path": "^0.12.7",
-    "winston": "^3.1.0"
-  },
+  "name": "codingcoach-api",
+  "version": "1.0.0",
+  "description": "Azure Functions sample for the Serverless framework",
+  "main": "handler.js",
+  "keywords": [
+    "azure",
+    "serverless"
+  ],
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.1",
-    "@babel/node": "^7.0.0",
-    "@babel/plugin-transform-arrow-functions": "^7.0.0",
-    "@babel/plugin-transform-runtime": "^7.1.0",
-    "@babel/plugin-transform-spread": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
-    "babel-core": "^7.0.0-bridge",
-    "babel-eslint": "^9.0.0",
-    "babel-jest": "^23.6.0",
-    "babel-loader": "^8.0.2",
-    "babel-plugin-inline-import": "^3.0.0",
-    "babel-plugin-module-resolver": "^3.1.1",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "backpack-core": "^0.8.3",
-    "eslint": "^5.5.0",
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-plugin-import": "^2.14.0",
-    "husky": "^1.0.0-rc.15",
-    "jest": "^23.6.0",
-    "lint-staged": "^7.3.0",
-    "nodemon": "^1.18.9",
-    "prettier": "^1.14.3",
-    "wait-on": "^3.0.1"
-  },
-  "jest": {
-    "testEnvironment": "node",
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "./dist"
-    ],
-    "coverageReporters": [
-      "lcov",
-      "html"
-    ],
-    "moduleNameMapper": {
-      "^mongoose$": "<rootDir>/node_modules/mongoose"
-    },
-    "setupTestFrameworkScriptFile": "<rootDir>/setupJest.js"
+    "serverless-azure-functions": "*"
   }
 }

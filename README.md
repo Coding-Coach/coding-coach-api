@@ -1,127 +1,54 @@
-# Coding-Coach-api
-[![Build Status](https://api.travis-ci.org/Coding-Coach/coding-coach-api.svg?branch=development)](https://travis-ci.org/Coding-Coach/coding-coach-api)
+# Serverless Azure Functions Node.js Template
 
+This starter template allows quickly creating a Node.js-based service to Azure Functions. It relies on the `serverless-azure-functions` plugin, and therefore, before you can deploy it, you simply need to run `npm install` in order to acquire it (this dependency is already saved in the `package.json` file).
 
-# Important INSTRUCTIONS for Developers
-Copy `.env.sample` to `.env` as it contains the ENV configurations needed during bootstrapping the appliation. DO NOT commit the .env file.
-If you have changes that are need on bootstrap, add it to the `.env.sample` file, and ensure you have handled the missing values in your code.
+### Setting up your Azure credentials
 
-You need to run the server in HTTPS Mode, to ensure you don't get conflicts in your browser.
-A `development.pem` has been provided in `src/certs`.
+Once the `serverless-azure-functions` plugin is installed, it expects to find your Azure credentials via a set of well-known environment variables. These will be used to actually authenticate with your Azure account, so that the Serverless CLI can generate the necessary Azure resources on your behalf when you request a deployment (see below).
 
-#### Mac Users
-Open Keychain Access and import the root certificate `development.pem` in `src/certs` to your System keychain. Then right click on `codingcoach` in Keychain and select `Get info`. Expand `Trust` and mark the certificate to `Always Trust`.
+The following environment variables must be set, with their respective values:
 
-#### Linux Users
-Depending on your Linux distribution, you can use `trust`, `update-ca-certificates` or another command to mark the generated root certificate as trusted. [TODO: add detailed instructions].
+- *azureSubId* - ID of the Azure subscription you want to create your service within
+- *azureServicePrincipalTenantId* - ID of the tenant that your service principal was created within
+- *azureServicePrincipalClientId* - ID of the service principal you want to use to authenticate with Azure
+- *azureServicePrincipalPassword* - Password of the service principal you want to use to authenticate with Azure
 
-#### Windows Users
-*No clues as how to do this at this point.*
+For details on how to create a service principal and/or acquire your Azure account's subscription/tenant ID, refer to the [Azure credentials](https://serverless.com/framework/docs/providers/azure/guide/credentials/) documentation.
 
-Add an alias in your `/etc/hosts` for `codingcoach.dev`.
+### Deploying the service
 
-```
-# /etc/hosts
-# Host Database
-#
-# localhost is used to configure the loopback interface
-# when the system is booting.  Do not change this entry.
-##
-127.0.0.1	localhost
-127.0.0.1 api.codingcoach.dev
-```
-## Development
-To run the server in `development`:
-1. `yarn install` - This will install the node dependencies
-2. `yarn start` - This will start the server
+Once your Azure credentials are set, you can immediately deploy your service via the following command:
 
-The server runs in watch mode so changes you make to the API will automatically restart the server
-with those changes.
-
-GraphQL Playground at : https://codingcoach.dev:3001/graphql
-
-> Note that this does not start a MongoDB database, ensure an instance is running at `localhost:27017`.
-
-## Production
-To run the server in `production`, you will need `Docker`.
-If you don't have Docker installed:
-* Mac users: https://docs.docker.com/docker-for-mac/install/
-* Windows users: https://docs.docker.com/docker-for-windows/
-
-To run the server:
-1. `docker-compose up -d`
-2. The server will be running at `http://localhost:3030/`
-
-> Note that using `docker-compose up` will also start a MongoDB container.
-
-## Build
-To build the API project and create the `production` version in the `dist` folder, run:
-```
-yarn build
+```shell
+serverless deploy
 ```
 
-## Build docker image
-To build the docker image for the API project, run:
+This will create the necessary Azure resources to support the service and events that are defined in your `serverless.yml` file.
+
+### Invoking and inspecting a function
+
+With the service deployed, you can test it's functions using the following command:
+
+```shell
+serverless invoke -f hello
 ```
-yarn build:docker
+
+Additionally, if you'd like to view the logs that a function generates (either via the runtime, or create by your handler by calling `context.log`), you can simply run the following command:
+
+```shell
+serverless logs -f hello
 ```
 
-If you want to start a container based on this image, run:
+### Cleaning up
+
+Once you're finished with your service, you can remove all of the generated Azure resources by simply running the following command:
+
+```shell
+serverless remove
 ```
-docker run -p 3000:80 coding-coach
-```
 
-## Tests
-To write and run tests against the development server:
-1. `yarn start:test` - This will start the server against a test database
-2. `yarn test` OR `yarn test --watch`
+### Issues / Feedback / Feature Requests?
 
-## Coding Coach Board
-In order to organize all the work, we are using https://zenhub.com to keep track of all the epics and tasks. After you login to ZenHub search for the Coding-Coach/coding-coach repository, make sure you don't add someone else fork.
+If you have any issues, comments or want to see new features, please file an issue in the project repository:
 
-## Workflow
-This section describes the workflow we are going to follow when working in a new feature or fixing a bug. If you want to contribute, please follow these steps:
-
-### Fork this project
-Clone the forked project to your local environment, for example:
-`git clone git@github.com:YOUR_GITHUB_USERNAME/coding-coach-api.git` (Make sure to replace the URL to your own repository).
-Add the original project as a remote, for this example the name is upstream, feel free to use whatever name you want.
-`git remote add upstream git@github.com:Coding-Coach/coding-coach-api.git`.
-Forking the project will create a copy of that project in your own GitHub account, you will commit your work against your own repository.
-
-### Update your local copy
-In order to update your local environment to the latest version on development, you will have to pull the changes using the upstream repository, for example: git pull upstream development. This will pull all the new commits from the origin repository to your local environment.
-
-### Features/Bugs/Chores
-When working on a new feature, create a new branch feature/something from the development branch, for example `feature/login-form`. Commit your work against this new branch and push everything to your forked project. Once everything is completed, you should create a PR to the original project. Make sure to add a description about your work and a link to the trello task.
-
-When fixing a bug, create a new branch fix/something from the development branch, for example `fix/css-btn-issues`. When completed, push your commits to your forked repository and create a PR from there. Please make sure to describe what was the problem and how did you fix it.
-
-When working on a chore (documentation updates, tech debt clean-up, etc), prefix your branch with `chore` ex. `chore/add-new-plugin`
-
-### Updating your local branch
-Let's say you've been working on a feature for a couple days, most likely there are new changes in development and your branch is behind. In order to update it to the latest (You might not need/want to do this) you need to pull the latest changes to develop and then rebase your current branch.
-```
-$ git checkout development
-$ git pull upstream development
-$ git checkout feature/something-awesome
-$ git rebase development
-```
-After this, your commits will be on top of the development commits. From here you can push to your origin repository and create a PR.
-
-You might have some conflicts while rebasing, try to resolve the conflicts for each individual commit. Rebasing is intimidating at the begining, if you need help don't be afraid to reach out in slack.
-
-Please Note that before you run the command:
-```
-$ git pull upstream development
-```
-you need to have ssh-key setup and added to your github account.
-
-If you are yet to setup ssh-key visit the link below:
-
-* https://help.github.com/articles/connecting-to-github-with-ssh/
-
-### PRs
-In order to merge a PR, there should be a couple of approval reviews. Once is approved, we should merge to the development branch using the Squash button in github.
-
-When using squash, all the commits will be squashed into one. The idea is to merge features/fixes as oppose of merging each individual commit. This helps when looking back in time for changes in the code base, and if the PR has a great comment, it's easier to know why that code was introduced.
+https://github.com/serverless/serverless-azure-functions
