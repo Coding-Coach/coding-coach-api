@@ -1,0 +1,28 @@
+
+service: codingcoach-api
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+# frameworkVersion: "=X.X.X"
+
+provider:
+  name: azure
+  location: West US 
+
+plugins:
+  - serverless-azure-functions
+
+# you can add packaging information here
+#package:
+#  include:
+#    - include-me.js
+#    - include-me-dir/**
+#  exclude:
+#    - exclude-me.js
+#    - exclude-me-dir/**
+
+functions:
+  users: ${file(src/handlers/users/config.yml):users}
+  users-add: ${file(src/handlers/users/config.yml):usersadd}
+  hello: ${file(src/handlers/hello/config.yml):hello}
+

@@ -2,11 +2,14 @@
   "name": "codingcoach-api",
   "version": "1.0.0",
   "description": "Azure Functions sample for the Serverless framework",
-  "main": "handler.js",
   "keywords": [
     "azure",
     "serverless"
   ],
+  "dependencies": {
+    "express-jwt": "^5.3.1",
+    "node-fetch": "^2.3.0"
+  },
   "devDependencies": {
     "serverless-azure-functions": "*"
   }

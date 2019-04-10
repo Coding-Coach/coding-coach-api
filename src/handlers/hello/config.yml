@@ -1,0 +1,10 @@
+hello:
+  handler: src/handlers/hello/handler.hello
+  events:
+    - http: true
+      x-azure-settings:
+        authLevel : anonymous
+    - http: true
+      x-azure-settings:
+        direction: out
+        name: res

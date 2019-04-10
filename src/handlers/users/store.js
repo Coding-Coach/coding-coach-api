@@ -1,6 +1,8 @@
 'use strict';
 
-module.exports.store = function (context) {
+const authMiddleware = require('../../middlewares/auth0.js');
+
+module.exports.add = authMiddleware((context) => {
   const json = {
     success: true,
     message: 'Succesfully saved'
@@ -15,4 +17,4 @@ module.exports.store = function (context) {
   };
 
   context.done();
-};
+});

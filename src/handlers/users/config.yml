@@ -1,0 +1,20 @@
+users:
+  handler: src/handlers/users/list.list
+  events:
+    - http: true
+      x-azure-settings:
+        authLevel : anonymous
+    - http: true
+      x-azure-settings:
+        direction: out
+        name: res
+usersadd:
+  handler: src/handlers/users/store.add
+  events:
+    - http: true
+      x-azure-settings:
+        authLevel : anonymous
+    - http: true
+      x-azure-settings:
+        direction: out
+        name: res
