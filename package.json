@@ -1,13 +1,51 @@
 {
-  "name": "codingcoach-api",
-  "version": "1.0.0",
-  "description": "Azure Functions sample for the Serverless framework",
-  "main": "handler.js",
-  "keywords": [
-    "azure",
-    "serverless"
-  ],
   "devDependencies": {
-    "serverless-azure-functions": "*"
+    "@fluffy-spoon/substitute": "^1.70.0",
+    "@types/async-retry": "^1.4.1",
+    "@types/jest": "^24.0.0",
+    "async-retry": "^1.2.3",
+    "azurite": "^2.7.0",
+    "copyfiles": "^2.1.0",
+    "jest": "23.6.0",
+    "onchange": "^5.2.0",
+    "rimraf": "^2.6.3",
+    "testcontainers": "^1.1.9",
+    "ts-jest": "^23.10.5",
+    "ts-transformer-imports": "^0.4.1",
+    "ttypescript": "^1.5.6"
+  },
+  "dependencies": {
+    "@azure/functions": "^1.0.1-beta2",
+    "@graphql-modules/core": "^0.7.0",
+    "@graphql-modules/di": "^0.7.0",
+    "@types/node": "^10.12.24",
+    "azure-storage": "^2.10.2",
+    "graphql": "^14.2.1",
+    "guid-typescript": "^1.0.9",
+    "reflect-metadata": "^0.1.13",
+    "typescript": "^3.3.3"
+  },
+  "config": {
+    "azureFunctions": {
+      "outDir": "dist",
+      "rootDir": "src",
+      "outHandlersDir": "dist/handlers"
+    }
+  },
+  "scripts": {
+    "build": "yarn clean && ttsc && yarn build:configFiles && yarn build:extensions",
+    "build:production": "yarn build && rimraf $npm_package_config_azureFunctions_outDir/local.settings.json && copyfiles package.json $npm_package_config_azureFunctions_outDir && yarn install --prefix $npm_package_config_azureFunctions_outDir --production && echo \"\nProduction build is ready in '$npm_package_config_azureFunctions_outDir'.\n\"",
+    "build:configFiles": "copyfiles -u 1 \"$npm_package_config_azureFunctions_rootDir/**/*.json\" \"$npm_package_config_azureFunctions_rootDir/**/*.csproj\" $npm_package_config_azureFunctions_outDir",
+    "cdout": "cd $npm_package_config_azureFunctions_outDir && pwd",
+    "build:extensions": "func extensions sync --prefix $npm_package_config_azureFunctions_outDir --output bin",
+    "install:extensions": "yarn build && func extensions install --prefix $npm_package_config_azureFunctions_outDir && copyfiles -u 1 $npm_package_config_azureFunctions_outDir/extensions.csproj $npm_package_config_azureFunctions_rootDir",
+    "install:extensions:force": "yarn build && func extensions install --prefix $npm_package_config_azureFunctions_outDir --force && copyfiles -u 1 $npm_package_config_azureFunctions_outDir/extensions.csproj $npm_package_config_azureFunctions_rootDir",
+    "start": "yarn build && yarn start:host & yarn watch",
+    "start:host": "func host start --prefix $npm_package_config_azureFunctions_outHandlersDir",
+    "start:azurite": "docker-compose up -d",
+    "watch": "tsc -w & onchange \"$npm_package_config_azureFunctions_rootDir/**/*.json\" \"$npm_package_config_azureFunctions_rootDir/**/*.csproj\" -- yarn build:configFiles",
+    "clean": "rimraf $npm_package_config_azureFunctions_outDir",
+    "test": "jest",
+    "publish:update": "yarn test && yarn build:production && echo \"Publishing '$npm_package_config_azureFunctions_outDir' content to already deployed function app '$npm_package_name'\" && func azure functionapp publish $npm_package_name --prefix $npm_package_config_azureFunctions_outDir"
   }
 }

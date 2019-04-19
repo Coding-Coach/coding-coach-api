@@ -1,8 +1,32 @@
-# package directories
+bin
+obj
+csx
+.vs
+edge
+Publish
+
+*.user
+*.suo
+*.cscfg
+*.Cache
+project.lock.json
+
+/packages
+/TestResults
+
+/tools/NuGet.exe
+/App_Data
+/secrets
+/data
+.secrets
+appsettings.json
+# local.settings.json
+
 node_modules
-jspm_packages
 
-# Serverless directories
-.serverless
+*.js
+*.map
+!jest.config.js
+dist
 
-.DS_Store
+*azuite*
