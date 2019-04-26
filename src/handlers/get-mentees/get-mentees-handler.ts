@@ -5,19 +5,19 @@ import { IMentorRepository } from '@repositories/mentor-repository/mentor-reposi
 
 @Injectable()
 class GetMentees {
-    constructor(
+  constructor(
     @Inject('IMentorRepository') private mentorRepository: IMentorRepository
-    ) {}
-    index = async (context: Context, req: HttpRequest): Promise<void> => {
-        context.log('JavaScript HTTP trigger function processed a request.');
-        const mentorId = req.query.mentorId;
-        const mentees = await this.mentorRepository.getMentees(mentorId);
+  ) {}
+  index = async (context: Context, req: HttpRequest): Promise<void> => {
+    context.log('JavaScript HTTP trigger function processed a request.');
+    const mentorId = req.query.mentorId;
+    const mentees = await this.mentorRepository.getMentees(mentorId);
 
-        context.res = {
-            status: '200',
-            body: JSON.stringify(mentees),
-        };
+    context.res = {
+      status: '200',
+      body: JSON.stringify(mentees),
     };
+  };
 }
 
 export { GetMentees };

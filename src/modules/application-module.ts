@@ -6,8 +6,8 @@ import { GetMentor } from '@handlers/get-mentor/get-mentor-handler';
 import { BoundaryModule } from './boundary-module';
 
 const ApplicationModule = new GraphQLModule({
-    providers: [AddMentee, GetMentees, GetMentor],
-    imports: [BoundaryModule],
+  providers: [AddMentee, GetMentees, GetMentor],
+  imports: [BoundaryModule],
 });
 
 export { ApplicationModule };

@@ -5,20 +5,20 @@ import { MentorRepository } from '@repositories/mentor-repository';
 import azurestorage from 'azure-storage';
 
 const BoundaryModule = new GraphQLModule({
-    providers: [
-        {
-            provide: 'IMenteeRepository',
-            useClass: MenteeRepository,
-        },
-        {
-            provide: 'IMentorRepository',
-            useClass: MentorRepository,
-        },
-        {
-            provide: 'TableService',
-            useValue: new azurestorage.TableService('UseDevelopmentStorage=true'),
-        },
-    ],
+  providers: [
+    {
+      provide: 'IMenteeRepository',
+      useClass: MenteeRepository,
+    },
+    {
+      provide: 'IMentorRepository',
+      useClass: MentorRepository,
+    },
+    {
+      provide: 'TableService',
+      useValue: new azurestorage.TableService('UseDevelopmentStorage=true'),
+    },
+  ],
 });
 
 export { BoundaryModule };
