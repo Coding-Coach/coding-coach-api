@@ -23,6 +23,7 @@
     "watch": "tsc -w & onchange \"$npm_package_config_azureFunctions_rootDir/**/*.json\" \"$npm_package_config_azureFunctions_rootDir/**/*.csproj\" -- yarn build:configFiles",
     "clean": "rimraf $npm_package_config_azureFunctions_outDir",
     "test": "jest",
+    "lint": "eslint src --ext .ts,.tsx",
     "publish:update": "yarn test && yarn build:production && echo \"Publishing '$npm_package_config_azureFunctions_outDir' content to already deployed function app '$npm_package_name'\" && func azure functionapp publish $npm_package_name --prefix $npm_package_config_azureFunctions_outDir"
   },
   "dependencies": {
@@ -40,9 +41,13 @@
     "@fluffy-spoon/substitute": "^1.70.0",
     "@types/async-retry": "^1.4.1",
     "@types/jest": "^24.0.0",
+    "@typescript-eslint/eslint-plugin": "^1.7.0",
+    "@typescript-eslint/parser": "^1.7.0",
     "async-retry": "^1.2.3",
     "azurite": "^2.7.0",
     "copyfiles": "^2.1.0",
+    "eslint": "^5.16.0",
+    "husky": "^2.1.0",
     "jest": "23.6.0",
     "onchange": "^5.2.0",
     "rimraf": "^2.6.3",
@@ -56,6 +61,11 @@
       "outDir": "dist",
       "rootDir": "src",
       "outHandlersDir": "dist/handlers"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint"
     }
   }
 }

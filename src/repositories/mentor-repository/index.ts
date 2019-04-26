@@ -1,2 +1,2 @@
-export * from "./mentor-entity";
-export * from "./mentor-repository";
+export * from './mentor-entity';
+export * from './mentor-repository';
