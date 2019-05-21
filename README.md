@@ -1,3 +1,7 @@
+###  Basics requirements
+
+- Docker, yarn
+
 # Serverless Azure Functions Node.js Template
 
 This starter template allows quickly creating a Node.js-based service to Azure Functions. It relies on the `serverless-azure-functions` plugin, and therefore, before you can deploy it, you simply need to run `npm install` in order to acquire it (this dependency is already saved in the `package.json` file).
@@ -14,6 +18,23 @@ The following environment variables must be set, with their respective values:
 - *azureServicePrincipalPassword* - Password of the service principal you want to use to authenticate with Azure
 
 For details on how to create a service principal and/or acquire your Azure account's subscription/tenant ID, refer to the [Azure credentials](https://serverless.com/framework/docs/providers/azure/guide/credentials/) documentation.
+
+### Install container
+
+`docker-compose up -d`
+
+### Install azure function core tools
+
+`npm install -g azure-functions-core-tools`
+
+### Run localy
+
+`yarn run start`
+
+### Basics end-points (Create and List users)
+
+- Intall Postman: https://www.getpostman.com/
+- Import this collection: `coach-code-api.postman_collection.json`
 
 ### Deploying the service
 

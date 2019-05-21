@@ -1,0 +1,42 @@
+{
+	"variables": [],
+	"info": {
+		"name": "coach-code-api",
+		"_postman_id": "56754707-2116-8c18-e175-b555a3ebf666",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Users",
+			"request": {
+				"url": "http://localhost:7071/api/get-users",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Add User",
+			"request": {
+				"url": "http://localhost:7071/api/add-user",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userId\": \"35024634845\",\n\t\"name\": \"Carlos\",\n\t\"email\": \"analista.carlosh@gmail.com\",\n\t\"avatar\": \"avatar\",\n\t\"title\": \"Developer\",\n\t\"description\": \"Developer\",\n\t\"country\": \"Brazil\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
