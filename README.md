@@ -1,3 +1,6 @@
+# This repo is deprecated
+We are archiving this repo, please consider contributing to https://github.com/Coding-Coach/find-a-mentor-api thanks!
+
 ###  Basics requirements
 
 - Docker, yarn
